@@ -22,6 +22,7 @@ travelbuddy/
 ## Требования
 
 - Go 1.27+
+- Python 3.10+ — для скриптов запуска
 
 ## Настройки
 
@@ -122,7 +123,7 @@ travelbuddy/
 - [`backend/.env.backend`](backend/.env.backend:1) — переменные backend;
 - [`bot/.env.bot`](bot/.env.bot:1) — переменные бота.
 
-Оба файла исключены из Git (`.env.*` в `.gitignore`). Заполните их нужными значениями.
+Оба файла локальные и не должны попадать в Git. Убедитесь, что в `.gitignore` есть строка `.env.*`. Заполните их нужными значениями.
 
 `backend/.env.backend`:
 
@@ -182,6 +183,35 @@ go run ./bot/cmd/bot
 ```
 
 Оба приложения запускаются независимо.
+
+### Скрипты запуска
+
+В папке `scripts/` лежат три Python-скрипта:
+
+```bash
+./scripts/build.py   # собрать backend и bot
+./scripts/start.py   # запустить backend и bot
+./scripts/stop.py    # остановить оба процесса
+```
+
+Скрипты используют те же env-файлы, проверяют наличие токена и ключа, пишут логи и PID в `/tmp/sophygo/`:
+
+```bash
+tail -f /tmp/sophygo/logs/backend.log
+tail -f /tmp/sophygo/logs/bot.log
+```
+
+`start.py` не собирает проект: сначала выполните `build.py`. Если backend уже запущен, повторный запуск не создаст второй процесс.
+
+Если токен или настройки лежат в другом месте, укажите путь явно:
+
+```bash
+./scripts/start.py --env-file /path/to/bot.env
+./scripts/start.py --settings-file /path/to/bot.json
+./scripts/start.py --env-file /path/to/bot.env --backend-env-file /path/to/backend.env
+```
+
+Пути передаются приложению через `BOT_ENV_FILE`, `BOT_SETTINGS_FILE`, `BACKEND_ENV_FILE` и `BACKEND_SETTINGS_FILE`. Токен Telegram читается только из env-файла, в JSON его хранить нельзя.
 
 ## Проверка
 
