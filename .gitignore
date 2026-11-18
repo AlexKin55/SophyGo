@@ -1,0 +1,20 @@
+# Environment
+.env
+.env.local
+
+# Binaries
+*.exe
+
+# Go
+*.test
+coverage.out
+
+# Build output
+/bin/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store

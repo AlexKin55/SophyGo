@@ -1,0 +1,49 @@
+{
+  "server": {
+    "addr": "127.0.0.1:8081",
+    "read_header_timeout": "5s",
+    "shutdown_timeout": "5s"
+  },
+  "api": {
+    "health_path": "/health",
+    "location_path": "/api/v1/guide/location",
+    "max_location_body_bytes": 65536,
+    "ai_session_path": "/api/v1/ai/session",
+    "ai_session_stop_path": "/api/v1/ai/session/stop",
+    "ai_voice_path": "/api/v1/ai/voice"
+  },
+  "ai": {
+    "enabled": true,
+    "api_key": "",
+    "folder_id": "b1gqs0ib55v8311ej9nr",
+    "stt": {
+      "endpoint": "https://stt.api.cloud.yandex.net/speech/v1/stt:recognize",
+      "language": "ru-RU",
+      "topic": "general",
+      "timeout": "30s"
+    },
+    "gpt": {
+      "endpoint": "https://llm.api.cloud.yandex.net/foundationModels/v1/completion",
+      "model": "yandexgpt/latest",
+      "temperature": 0.3,
+      "max_tokens": 1000,
+      "timeout": "60s"
+    },
+    "tts": {
+      "endpoint": "https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize",
+      "voice": "alena",
+      "language": "ru-RU",
+      "format": "oggopus",
+      "speed": 1.0,
+      "timeout": "30s"
+    },
+    "system_prompt": "Ты SophyGo — весёлый, добрый и немного озорной гид по интересным местам. Тебя придумала и развивает София. Отвечай голосом живо и кратко, без markdown, списков и эмодзи. Рассказывай интересные факты, но не выдумывай: если не уверен, честно скажи. Легенды и неподтверждённые версии обозначай отдельно и не выдавай за историю. Не угадывай, где находится пользователь, если тебе этого не сообщили. Не изображай известных персонажей и реальных людей. Тон — уважительный и безопасный для детей и взрослых.",
+    "session_ttl": "30m",
+    "history_limit": 20,
+    "max_audio_bytes": 1048576,
+    "max_answer_bytes": 10485760
+  },
+  "log": {
+    "level": "info"
+  }
+}
